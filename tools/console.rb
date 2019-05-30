@@ -3,10 +3,21 @@ prompt = TTY::Prompt.new
 
 
 system "clear"
+puts "\n\n\n"
+puts <<-'EOF'
+██▓███   ██▀███   ▒█████   ▄▄▄██▀▀▀▓█████  ▄████▄  ▄▄▄█████▓    ▄▄▄▄    ▄▄▄      ▄▄▄█████▓▄▄▄█████▓ ██▓    ▓█████ 
+▓██░  ██▒▓██ ▒ ██▒▒██▒  ██▒   ▒██   ▓█   ▀ ▒██▀ ▀█  ▓  ██▒ ▓▒   ▓█████▄ ▒████▄    ▓  ██▒ ▓▒▓  ██▒ ▓▒▓██▒    ▓█   ▀ 
+▓██░ ██▓▒▓██ ░▄█ ▒▒██░  ██▒   ░██   ▒███   ▒▓█    ▄ ▒ ▓██░ ▒░   ▒██▒ ▄██▒██  ▀█▄  ▒ ▓██░ ▒░▒ ▓██░ ▒░▒██░    ▒███   
+▒██▄█▓▒ ▒▒██▀▀█▄  ▒██   ██░▓██▄██▓  ▒▓█  ▄ ▒▓▓▄ ▄██▒░ ▓██▓ ░    ▒██░█▀  ░██▄▄▄▄██ ░ ▓██▓ ░ ░ ▓██▓ ░ ▒██░    ▒▓█  ▄ 
+▒██▒ ░  ░░██▓ ▒██▒░ ████▓▒░ ▓███▒   ░▒████▒▒ ▓███▀ ░  ▒██▒ ░    ░▓█  ▀█▓ ▓█   ▓██▒  ▒██▒ ░   ▒██▒ ░ ░██████▒░▒████▒
+▒▓▒░ ░  ░░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒▓▒▒░   ░░ ▒░ ░░ ░▒ ▒  ░  ▒ ░░      ░▒▓███▀▒ ▒▒   ▓▒█░  ▒ ░░     ▒ ░░   ░ ▒░▓  ░░░ ▒░ ░
+░▒ ░       ░▒ ░ ▒░  ░ ▒ ▒░  ▒ ░▒░    ░ ░  ░  ░  ▒       ░       ▒░▒   ░   ▒   ▒▒ ░    ░        ░    ░ ░ ▒  ░ ░ ░  ░
+░░         ░░   ░ ░ ░ ░ ▒   ░ ░ ░      ░   ░          ░          ░    ░   ░   ▒     ░        ░        ░ ░      ░   
+            ░         ░ ░   ░   ░      ░  ░░ ░                   ░            ░  ░                      ░  ░   ░  ░
+                                           ░                          ░                                                              
+EOF
 
-puts " TITLE HERE"
-
-prompt.keypress("Press space or enter to continue", keys: [:space, :return])
+prompt.keypress("                                      Press space or enter to continue", keys: [:space, :return])
 
 system "clear"
 
@@ -27,7 +38,7 @@ p1trainer = prompt.select("Player 1, Please select your trainer",trainer_options
                 available_pokemons -= new_trainer_pokemons
                 selected_pokemon = Pocketmonster.find_by(name: prompt.select("Select Pokemon",available_pokemons))
                 PocketmonsterTrainer.create(trainer_id: new_trainer.id,pocketmonster_id: selected_pokemon.id,hitpoints: selected_pokemon.hp)
-                new_trainer = Trainer.find(new_trainer.id)
+                new_trainer.reload
             end
 
             new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
@@ -79,7 +90,7 @@ if p2trainer == "New Trainer"
         available_pokemons -= new_trainer_pokemons
         selected_pokemon = Pocketmonster.find_by(name: prompt.select("Select Pokemon",available_pokemons))
         PocketmonsterTrainer.create(trainer_id: new_trainer.id,pocketmonster_id: selected_pokemon.id,hitpoints: selected_pokemon.hp)
-        new_trainer = Trainer.find(new_trainer.id)
+        new_trainer.reload
     end
 
     new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
@@ -180,8 +191,38 @@ end
 #Game ended
 system "clear"
 if player1.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum > 0
-    6.times do puts "Player 1 WON!" end
+puts <<-'EOF'
+                                                                                    __                                 .-'''-.                
+                        .---.                                                  ...-'  |`.                             '   _    \              
+_________   _...._      |   |                            __.....__             |      |  |                          /   /` '.   \    _..._    
+\        |.'      '-.   |   |        .-.          .- .-''         '.           ....   |  |                  _     _.   |     \  '  .'     '.  
+ \        .'```'.    '. |   |         \ \        / //     .-''"'-.  `. .-,.--.   -|   |  |            /\    \\   //|   '      |  '.   .-.   . 
+  \      |       \     \|   |    __    \ \      / //     /________\   \|  .-. |   |   |  |            `\\  //\\ // \    \     / / |  '   '  | 
+   |     |        |    ||   | .:--.'.   \ \    / / |                  || |  | |...'   `--'              \`//  \'/   `.   ` ..' /  |  |   |  | 
+   |      \      /    . |   |/ |   \ |   \ \  / /  \    .-------------'| |  | ||         |`.             \|   |/       '-...-'`   |  |   |  | 
+   |     |\`'-.-'   .'  |   |`" __ | |    \ `  /    \    '-.____...---.| |  '- ` --------\ |              '                       |  |   |  | 
+   |     | '-....-'`    |   | .'.''| |     \  /      `.             .' | |      `---------'                                       |  |   |  | 
+  .'     '.             '---'/ /   | |_    / /         `''-...... -'   | |                                                        |  |   |  | 
+'-----------'                \ \._,\ '/|`-' /                          |_|                                                        |  |   |  | 
+                              `--'  `"  '..'                                                                                      '--'   '--' 
+EOF
+
     
 else
-    6.times do puts "Player 2 WON!" end
+    puts <<-'EOF'
+                                                                                                                       .-'''-.                
+                        .---.                                                     .-''-.                              '   _    \              
+_________   _...._      |   |                            __.....__              .' .-.  )                           /   /` '.   \    _..._    
+\        |.'      '-.   |   |        .-.          .- .-''         '.           / .'  / /                    _     _.   |     \  '  .'     '.  
+ \        .'```'.    '. |   |         \ \        / //     .-''"'-.  `. .-,.--.(_/   / /               /\    \\   //|   '      |  '.   .-.   . 
+  \      |       \     \|   |    __    \ \      / //     /________\   \|  .-. |    / /                `\\  //\\ // \    \     / / |  '   '  | 
+   |     |        |    ||   | .:--.'.   \ \    / / |                  || |  | |   / /                   \`//  \'/   `.   ` ..' /  |  |   |  | 
+   |      \      /    . |   |/ |   \ |   \ \  / /  \    .-------------'| |  | |  . '                     \|   |/       '-...-'`   |  |   |  | 
+   |     |\`'-.-'   .'  |   |`" __ | |    \ `  /    \    '-.____...---.| |  '-  / /    _.-')              '                       |  |   |  | 
+   |     | '-....-'`    |   | .'.''| |     \  /      `.             .' | |    .' '  _.'.-''                                       |  |   |  | 
+  .'     '.             '---'/ /   | |_    / /         `''-...... -'   | |   /  /.-'_.'                                           |  |   |  | 
+'-----------'                \ \._,\ '/|`-' /                          |_|  /    _.'                                              |  |   |  | 
+                              `--'  `"  '..'                               ( _.-'                                                 '--'   '--' 
+EOF
+
 end
