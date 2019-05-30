@@ -27,24 +27,6 @@ def moves_printer(movelist)
     return pps
 end
 
-def print_owned_monsters(owned_pokemon)
-    owned_pokemon.each_with_index do |list, i| puts "#{i+1} - #{list.pocketmonster.name} HP: #{list.hitpoints} / #{list.pocketmonster.hp}" end
-end
-
-def attack_phase(attack_mon,defense_mon)
-    available_moves = moves_printer(attack_mon.movelists)
-    input = gets.chomp.to_i
-    selected_move = available_moves[input-1].move
-    available_moves[input-1].pp-=1
-    puts "#{attack_mon.pocketmonster.name} used #{selected_move.name}!!"
-    move_dmg=selected_move.base_damage
-    defense_mon.hitpoints -= move_dmg
-    if defense_mon.hitpoints <0
-        defense_mon.hitpoints = 0
-    end
-    sleep 1
-end
-
 def attack_phaseAI(attack_mon,defense_mon)
     available_moves = moves_printer(attack_mon.movelists)
     input = rand(1..available_moves.length)
@@ -59,7 +41,7 @@ def attack_phaseAI(attack_mon,defense_mon)
     sleep 2
 end
 
-def attack_phase_test(attack_mon,defense_mon)
+def attack_phase(attack_mon,defense_mon)
     prompt = TTY::Prompt.new
     move_name = prompt.select("Select your move",filter_movelists(attack_mon.movelists))
     selected_move = Move.find_by(name: move_name)
@@ -92,23 +74,3 @@ def swap_pocketmonster(playerpocketmonsters)
     chosen_pokemon = Pocketmonster.find_by(name: prompt.select("Available Pokemons",pokemons))
     return playerpocketmonsters.select {|pokemon| pokemon.pocketmonster.id == chosen_pokemon.id}.first
 end
-
-
-# puts "----------------------------------------------------"
-# puts "| 1.move1 pp/pp     2.move2 pp/pp     3.move3 pp/pp|"
-# puts "----------------------------------------------------"
-# puts "\n\n"
-
-# puts "HP Full"
-# puts "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓"
-# puts "\n\n\n\n"
-
-# puts "HP half"
-# puts "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░"
-
-# hp = 40
-# hp_remain = 60-hp
-
-# puts "\n\n\n\n\nvariable testing"
-# hp.times do print "▓" end
-# hp_remain.times do print "░" end

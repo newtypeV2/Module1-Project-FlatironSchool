@@ -136,7 +136,7 @@ while
     end
     print_ui(pocketmonster_p1,pocketmonster_p2)   
     puts "\n\n\nPlayer 1 Turn: \n"
-    attack_phase_test(pocketmonster_p1,pocketmonster_p2)
+    attack_phase(pocketmonster_p1,pocketmonster_p2)
     
     #Win condition, change when Trainer is implemented
         if pocketmonster_p2.hitpoints <= 0 && player2.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum > 0
