@@ -15,111 +15,21 @@ EOF
 
 prompt.keypress("                                      Press space or enter to continue", keys: [:space, :return])
 
+#Trainer select sectioj
 system "clear"
-
 trainer_options = Trainer.all.collect do |trainer| trainer.name end
 trainer_options << "New Trainer"
-
 player1 = trainer_select(trainer_options)
-
-# p1trainer = prompt.select("Player 1, Please select your trainer",trainer_options)
-#         if p1trainer == "New Trainer"
-#             #Create new Trainer
-#             puts "Please type in a name:"
-#             inputname = gets.chomp
-#             new_trainer = Trainer.create(name: inputname)
-#             available_pokemons = Pocketmonster.all.collect do |pokemon| pokemon.name end
-
-#             #Printout available pokemons
-#             5.times do
-#                 new_trainer_pokemons = new_trainer.pocketmonsters.collect do |pokemon| pokemon.name end
-#                 available_pokemons -= new_trainer_pokemons
-#                 selected_pokemon = Pocketmonster.find_by(name: prompt.select("Select Pokemon",available_pokemons))
-#                 PocketmonsterTrainer.create(trainer_id: new_trainer.id,pocketmonster_id: selected_pokemon.id,hitpoints: selected_pokemon.hp)
-#                 new_trainer.reload
-#             end
-
-#             new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 1, pp: 3)
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 2, pp: 2)
-#                 case trainer_pokemon.pocketmonster_id
-#                     when 1
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 3, pp: 1)
-#                     when 2
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 4, pp: 1)
-#                     when 3
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 5, pp: 1)
-#                     when 4
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 8, pp: 1)
-#                     when 5
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 6, pp: 1)
-#                     when 6
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 7, pp: 1)
-#                     when 7 
-#                         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 9, pp: 30)
-#                 end
-#             end
-
-#             new_trainer.reload
-#             player1 = new_trainer
-
-#           else
-#           player1 = Trainer.find_by(name: p1trainer)
-#          end
-
 system "clear"
-
 trainer_options -= [player1.name]
 player2 = trainer_select(trainer_options)
-# p2trainer = prompt.select("Player 2, Please select your trainer",trainer_options)
-# if p2trainer == "New Trainer"
-#     #Create new Trainer
-#     puts "Please type in a name:"
-#     inputname = gets.chomp
-#     new_trainer = Trainer.create(name: inputname)
-#     available_pokemons = Pocketmonster.all.collect do |pokemon| pokemon.name end
-
-#     #Printout available pokemons
-#     5.times do
-#         new_trainer_pokemons = new_trainer.pocketmonsters.collect do |pokemon| pokemon.name end
-#         available_pokemons -= new_trainer_pokemons
-#         selected_pokemon = Pocketmonster.find_by(name: prompt.select("Select Pokemon",available_pokemons))
-#         PocketmonsterTrainer.create(trainer_id: new_trainer.id,pocketmonster_id: selected_pokemon.id,hitpoints: selected_pokemon.hp)
-#         new_trainer.reload
-#     end
-
-#     new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
-#         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 1, pp: 3)
-#         Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 2, pp: 2)
-#         case trainer_pokemon.pocketmonster_id
-#             when 1
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 3, pp: 1)
-#             when 2
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 4, pp: 1)
-#             when 3
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 5, pp: 1)
-#             when 4
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 6, pp: 1)
-#             when 5
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 7, pp: 1)
-#             when 6
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 8, pp: 1)
-#             when 7 
-#                 Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 9, pp: 30)
-#         end
-#     end
-
-#     new_trainer.reload
-#     player2 = new_trainer
-# else
-#     player2 = Trainer.find_by(name: p2trainer)
-# end
-
 pocketmonster_p1 = player1.pocketmonster_trainers[0]
 pocketmonster_p2 = player2.pocketmonster_trainers[0]
 
+#Battle Start!
 
 while
+    #player 1 turn begin
     swapoption = true
     while swapoption
     print_ui(pocketmonster_p1,pocketmonster_p2)
@@ -137,7 +47,6 @@ while
     puts "\n\n\nPlayer 1 Turn: \n"
     attack_phase(pocketmonster_p1,pocketmonster_p2)
     
-    #Win condition, change when Trainer is implemented
         if pocketmonster_p2.hitpoints <= 0 && player2.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum > 0
             print_ui(pocketmonster_p1,pocketmonster_p2)
             puts "\n \n#{pocketmonster_p2.trainer.name}'s #{pocketmonster_p2.pocketmonster.name} FAINTED!! \n"
@@ -148,8 +57,6 @@ while
         if player2.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum == 0
         break
         end
-
-    #Win condition END
 
     #player 2 turn begin
     swapoption = true
