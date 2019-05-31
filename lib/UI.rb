@@ -74,3 +74,49 @@ def swap_pocketmonster(playerpocketmonsters)
     chosen_pokemon = Pocketmonster.find_by(name: prompt.select("Available Pokemons",pokemons))
     return playerpocketmonsters.select {|pokemon| pokemon.pocketmonster.id == chosen_pokemon.id}.first
 end
+
+def trainer_select(trainer_options)
+    prompt = TTY::Prompt.new
+    selected_trainer = prompt.select("Player 1, Please select your trainer",trainer_options)
+        if selected_trainer == "New Trainer"
+            #Create new Trainer
+            puts "Please type in a name:"
+            inputname = gets.chomp
+            new_trainer = Trainer.create(name: inputname)
+            available_pokemons = Pocketmonster.all.collect do |pokemon| pokemon.name end
+
+            #Printout available pokemons
+            5.times do
+                new_trainer_pokemons = new_trainer.pocketmonsters.collect do |pokemon| pokemon.name end
+                available_pokemons -= new_trainer_pokemons
+                selected_pokemon = Pocketmonster.find_by(name: prompt.select("Select Pokemon",available_pokemons))
+                PocketmonsterTrainer.create(trainer_id: new_trainer.id,pocketmonster_id: selected_pokemon.id,hitpoints: selected_pokemon.hp)
+                new_trainer.reload
+            end
+
+            new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
+                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 1, pp: 3)
+                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 2, pp: 2)
+                case trainer_pokemon.pocketmonster_id
+                    when 1
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 3, pp: 1)
+                    when 2
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 4, pp: 1)
+                    when 3
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 5, pp: 1)
+                    when 4
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 8, pp: 1)
+                    when 5
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 6, pp: 1)
+                    when 6
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 7, pp: 1)
+                    when 7 
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 9, pp: 30)
+                end
+            end
+            new_trainer.reload
+            return new_trainer
+        else
+            return Trainer.find_by(name: selected_trainer)
+        end
+end
