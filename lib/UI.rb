@@ -95,23 +95,23 @@ def trainer_select(trainer_options)
             end
 
             new_trainer.pocketmonster_trainers.each do |trainer_pokemon|
-                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 1, pp: 3)
-                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 2, pp: 2)
+                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 1, pp: 30)
+                Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 2, pp: 8)
                 case trainer_pokemon.pocketmonster_id
                     when 1
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 3, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 3, pp: 2)
                     when 2
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 4, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 4, pp: 2)
                     when 3
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 5, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 5, pp: 2)
                     when 4
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 8, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 8, pp: 2)
                     when 5
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 6, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 6, pp: 2)
                     when 6
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 7, pp: 1)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 7, pp: 2)
                     when 7 
-                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 9, pp: 30)
+                        Movelist.find_or_create_by(pocketmonster_trainer_id: trainer_pokemon.id,move_id: 9, pp: 50)
                 end
             end
             new_trainer.reload
