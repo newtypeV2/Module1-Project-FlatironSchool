@@ -13,7 +13,7 @@ puts <<-'EOF'
 ╚═╝     ╚═╝ ╚═════╝ ╚═════╝      ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚════╝ ╚══════╝ ╚═════╝   ╚═╝  
 EOF
 
-prompt.keypress("                                      Press space or enter to continue", keys: [:space, :return])
+prompt.keypress("                                 Press space or enter to continue", keys: [:space, :return])
 
 #Trainer select sectioj
 system "clear"
@@ -33,7 +33,15 @@ while
     swapoption = true
     while swapoption
     print_ui(pocketmonster_p1,pocketmonster_p2)
-    puts "\n\n\nPlayer 1 Turn: \n"
+    # puts "\n\n\nPlayer 1 Turn: \n"
+    puts "\n\n\n"
+    puts <<-'EOF'
+     _   _   _   _   _   _     _     _   _   _   _   _  
+    / \ / \ / \ / \ / \ / \   / \   / \ / \ / \ / \ / \ 
+   ( P | l | a | y | e | r ) ( 1 ) ( T | u | r | n | : )
+    \_/ \_/ \_/ \_/ \_/ \_/   \_/   \_/ \_/ \_/ \_/ \_/ 
+    EOF
+    puts "\n"
     selected_option=print_pkmn_fight
         if selected_option == "PKMN"
             puts "Select pokemon method here"
@@ -44,12 +52,19 @@ while
         end
     end
     print_ui(pocketmonster_p1,pocketmonster_p2)   
-    puts "\n\n\nPlayer 1 Turn: \n"
+    puts "\n\n\n"
+    puts <<-'EOF'
+     _   _   _   _   _   _     _     _   _   _   _   _  
+    / \ / \ / \ / \ / \ / \   / \   / \ / \ / \ / \ / \ 
+   ( P | l | a | y | e | r ) ( 1 ) ( T | u | r | n | : )
+    \_/ \_/ \_/ \_/ \_/ \_/   \_/   \_/ \_/ \_/ \_/ \_/ 
+    EOF
+    puts "\n"
     attack_phase(pocketmonster_p1,pocketmonster_p2)
     
         if pocketmonster_p2.hitpoints <= 0 && player2.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum > 0
             print_ui(pocketmonster_p1,pocketmonster_p2)
-            puts "\n \n#{pocketmonster_p2.trainer.name}'s #{pocketmonster_p2.pocketmonster.name} FAINTED!! \n"
+            puts "\n \n#{pocketmonster_p2.trainer.name}'s #{pocketmonster_p2.pocketmonster.name} FAINTED!! \n\n"
             puts "PLEASE SELECT A NEW POKEMON"
             pocketmonster_p2=swap_pocketmonster(player2.pocketmonster_trainers)
         end
@@ -62,7 +77,15 @@ while
     swapoption = true
     while swapoption
     print_ui(pocketmonster_p1,pocketmonster_p2)
-    puts "\n\n\nPlayer 2 Turn: \n"
+    puts "\n\n\n"
+    puts <<-'EOF'
+     _   _   _   _   _   _     _     _   _   _   _   _  
+    / \ / \ / \ / \ / \ / \   / \   / \ / \ / \ / \ / \ 
+   ( P | l | a | y | e | r ) ( 2 ) ( T | u | r | n | : )
+    \_/ \_/ \_/ \_/ \_/ \_/   \_/   \_/ \_/ \_/ \_/ \_/ 
+    EOF
+    puts "\n"
+    
     selected_option=print_pkmn_fight
         if selected_option == "PKMN"
             puts "Select pokemon method here"
@@ -73,13 +96,20 @@ while
         end
     end
     print_ui(pocketmonster_p1,pocketmonster_p2)
-    puts "\n\n\nPlayer 2 Turn: \n"
-    attack_phaseAI(pocketmonster_p2,pocketmonster_p1)
-
+    puts "\n\n\n"
+    puts <<-'EOF'
+     _   _   _   _   _   _     _     _   _   _   _   _  
+    / \ / \ / \ / \ / \ / \   / \   / \ / \ / \ / \ / \ 
+   ( P | l | a | y | e | r ) ( 2 ) ( T | u | r | n | : )
+    \_/ \_/ \_/ \_/ \_/ \_/   \_/   \_/ \_/ \_/ \_/ \_/ 
+    EOF
+    puts "\n"
+    # attack_phaseAI(pocketmonster_p2,pocketmonster_p1)
+    attack_phase(pocketmonster_p2,pocketmonster_p1)
 
         if pocketmonster_p1.hitpoints <= 0 && player1.pocketmonster_trainers.collect{|pokemon| pokemon.hitpoints}.sum > 0
             print_ui(pocketmonster_p1,pocketmonster_p2)
-            puts "\n \n#{pocketmonster_p1.trainer.name}'s #{pocketmonster_p1.pocketmonster.name} FAINTED!! \n"
+            puts "\n \n#{pocketmonster_p1.trainer.name}'s #{pocketmonster_p1.pocketmonster.name} FAINTED!! \n\n"
             puts "PLEASE SELECT A NEW POKEMON"
             pocketmonster_p1=swap_pocketmonster(player1.pocketmonster_trainers)
         end
